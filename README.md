@@ -1,0 +1,1 @@
+# EmberCLI Fontana addon

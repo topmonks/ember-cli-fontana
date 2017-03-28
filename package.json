@@ -1,0 +1,18 @@
+{
+  "name": "ember-cli-fontana",
+  "version": "0.0.1",
+  "description": "EmberCLI fontana addon.",
+  "repository": "https://github.com/topmonks/ember-cli.fontana.git",
+  "author": "jan.machacek@topmonks.com",
+  "license": "MIT",
+  "keywords": [
+    "ember-addon"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "fontana": "git+ssh://git@github.com/topmonks/fontana.git"
+  }
+}
