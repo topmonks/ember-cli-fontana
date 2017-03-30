@@ -17,12 +17,10 @@ function getFontMTime(outputDir) {
 }
 
 function fontUpdateIsNeeded(configPath, outputDir) {
-  const normalizedOutputDirPath = path.join(__dirname, outputDir);
-
   if (fs.existsSync(configPath)) {
-    if (fs.existsSync(normalizedOutputDirPath)) {
+    if (fs.existsSync(outputDir)) {
       const configModifyTime = fs.statSync(configPath).mtime;
-      const outputDirModifyTime = getFontMTime(normalizedOutputDirPath);
+      const outputDirModifyTime = getFontMTime(outputDir);
       return configModifyTime > outputDirModifyTime;
     }
     return true;
@@ -34,12 +32,13 @@ function fontUpdateIsNeeded(configPath, outputDir) {
 
 function fontGenerate(options) {
   const { fontConfig, outputPath, glyphsPath } = options;
+  const dir = __dirname;
 
   if (fontConfig) {
-    const fontConfigPath = path.join(__dirname, '..', '..', fontConfig);
-    const outputDirPath = path.join('..', '..', outputPath);
+    const fontConfigPath = path.join(dir, '..', '..', fontConfig);
+    const outputDirPath = path.join(dir, '..', '..', outputPath);
     const outputDirPathFontana = path.join('..', '..', '..', outputPath);
-    const glyphsDirPath = glyphsPath ? path.join('..', '..', glyphsPath) : path.join('..', 'fontana', 'icons');
+    const glyphsDirPath = glyphsPath ? path.join(dir, '..', '..', glyphsPath) : path.join(dir, '..', 'fontana', 'icons');
 
     if (fontUpdateIsNeeded(fontConfigPath, outputDirPath)) {
       const fontFile = fs.readFileSync(fontConfigPath);
