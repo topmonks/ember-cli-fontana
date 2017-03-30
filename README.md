@@ -17,7 +17,3 @@ var app = new EmberApp(defaults, {
     },
     ...
 ```
-
-## Known issues
-Addon rebuilds fonts only at application startup, not while the app is running.
-

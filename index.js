@@ -17,12 +17,11 @@ function getFontMTime(outputDir) {
 }
 
 function fontUpdateIsNeeded(configPath, outputDir) {
-  const normalizedConfigPath = path.join(__dirname, configPath);
   const normalizedOutputDirPath = path.join(__dirname, outputDir);
 
-  if (fs.existsSync(normalizedConfigPath)) {
+  if (fs.existsSync(configPath)) {
     if (fs.existsSync(normalizedOutputDirPath)) {
-      const configModifyTime = fs.statSync(normalizedConfigPath).mtime;
+      const configModifyTime = fs.statSync(configPath).mtime;
       const outputDirModifyTime = getFontMTime(normalizedOutputDirPath);
       return configModifyTime > outputDirModifyTime;
     }
@@ -37,14 +36,24 @@ function fontGenerate(options) {
   const { fontConfig, outputPath, glyphsPath } = options;
 
   if (fontConfig) {
-    const fontConfigPath = path.join('..', '..', fontConfig);
+    const fontConfigPath = path.join(__dirname, '..', '..', fontConfig);
     const outputDirPath = path.join('..', '..', outputPath);
     const outputDirPathFontana = path.join('..', '..', '..', outputPath);
     const glyphsDirPath = glyphsPath ? path.join('..', '..', glyphsPath) : path.join('..', 'fontana', 'icons');
 
     if (fontUpdateIsNeeded(fontConfigPath, outputDirPath)) {
+      const fontFile = fs.readFileSync(fontConfigPath);
+      let fontJson = null;
+
+      try {
+        fontJson = JSON.parse(fontFile);
+      } catch (syntaxError) {
+        console.error(`Font config: ${fontConfig} is invalid JSON`);
+        return
+      }
+
       fontana.generate({
-        fontConfig: require(fontConfigPath),
+        fontConfig: fontJson,
         outputPath: outputDirPathFontana,
         glyphsPath: glyphsDirPath
       });
