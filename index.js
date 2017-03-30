@@ -37,7 +37,6 @@ function fontGenerate(options) {
   if (fontConfig) {
     const fontConfigPath = path.join(dir, '..', '..', fontConfig);
     const outputDirPath = path.join(dir, '..', '..', outputPath);
-    const outputDirPathFontana = path.join('..', '..', '..', outputPath);
     const glyphsDirPath = glyphsPath ? path.join(dir, '..', '..', glyphsPath) : path.join(dir, '..', 'fontana', 'icons');
 
     if (fontUpdateIsNeeded(fontConfigPath, outputDirPath)) {
@@ -53,7 +52,7 @@ function fontGenerate(options) {
 
       fontana.generate({
         fontConfig: fontJson,
-        outputPath: outputDirPathFontana,
+        outputPath: outputDirPath,
         glyphsPath: glyphsDirPath
       });
     }
