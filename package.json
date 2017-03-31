@@ -13,6 +13,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "fontana": "git+ssh://git@github.com/topmonks/fontana.git"
+    "fontana": "1.0.0"
   }
 }
